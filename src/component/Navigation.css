@@ -1,0 +1,25 @@
+.navigation {
+    width: 100%;
+    height: 130px;
+    
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.navigation img{
+    width: 70px;
+}
+
+.navigation-elements {
+    display: flex;
+    flex-direction: row;
+    font-weight: 500;
+}
+
+.navigation a {
+    margin : 5px 10px;
+}
