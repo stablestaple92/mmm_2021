@@ -14,14 +14,3 @@ body {
 
     justify-items: center;
 }
-
-.footer {
-    width: 100%;
-    min-height: 150px;
-
-    background-color: plum;
-
-    margin: 10px 0 0 0;
-    padding: 15px 0 0  0;
-    text-align: center;
-}
