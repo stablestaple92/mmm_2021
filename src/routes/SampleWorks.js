@@ -1,7 +1,14 @@
 import React from "react";
+import { useHistory } from "react-router";
 
-const SampleWorks = () => {
+const SampleWorks = ( {isLoggedIn} ) => {
+    const history = useHistory();
+
+    if(!isLoggedIn) {
+        history.push("/");
+    }
     return (
+
         <>
         <span>
             We can change Works Thingy

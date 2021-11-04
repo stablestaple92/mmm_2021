@@ -1,10 +1,10 @@
 import React from "react";
 import { authService } from "fbase";
 import { useHistory } from "react-router";
-import { Link } from "react-router-dom"
 
 const SampleLaboratory = ({ isLoggedIn, userObj }) => {
     const history = useHistory();
+    console.log(userObj);
     if(!isLoggedIn) {
         history.push("/");
     }
@@ -14,7 +14,9 @@ const SampleLaboratory = ({ isLoggedIn, userObj }) => {
     }
     return (
         <div>
-            <div>Configuration</div>
+            <div>Hello!</div>
+            <div>Click navigation to config your informations</div>
+            <div>Your Email : {userObj.email}</div>
 
             <button onClick={onLogOutClick}>Log Out</button>
         </div>

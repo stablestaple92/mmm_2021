@@ -16,6 +16,7 @@ import SamplePerf from "routes/SamplePerformance";
 
 
 const AppRouter = ({ isLoggedIn, userObj }) => {
+  console.log(userObj);
     return (
       <Router> 
         <Switch>
@@ -25,11 +26,15 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
             <Route exact path='/samplelaboratory'>
               <SampleLaboratory isLoggedIn={isLoggedIn} userObj={userObj} />
             </Route>
-            <Route path='/samplelaboratory/about'>
+            <Route path='/samplelaboratory/about' component={SampleAbout}>
               <SampleAbout isLoggedIn={isLoggedIn} userObj={userObj}/>
             </Route>
-            <Route path='/samplelaboratory/works' component={SampleWorks} />
-            <Route path='/samplelaboratory/performance' component={SamplePerf} />
+            <Route path='/samplelaboratory/works' component={SampleWorks}>
+              <SampleWorks isLoggedIn={isLoggedIn} />
+            </Route>
+            <Route path='/samplelaboratory/performance' component={SamplePerf}>
+              <SamplePerf isLoggedIn={isLoggedIn} />
+            </Route>
                
          
             <Route exact path='/' component={Main} />

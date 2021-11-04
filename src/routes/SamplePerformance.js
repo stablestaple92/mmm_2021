@@ -1,6 +1,13 @@
 import React from "react";
+import { useHistory } from "react-router";
 
-const SamplePerf = () => {
+const SamplePerf = ( {isLoggedIn} ) => {
+    const history = useHistory();
+
+    if(!isLoggedIn) {
+        history.push("/");
+    }
+
     return (
         <>
         <span>
