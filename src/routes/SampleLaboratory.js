@@ -1,9 +1,9 @@
 import React from "react";
 import { authService } from "fbase";
-import { Router, useHistory } from "react-router";
+import { useHistory } from "react-router";
+import { Link } from "react-router-dom"
 
-const SampleLabotary = ({ restricted, isLoggedIn, match }) => {
-    console.log(isLoggedIn);
+const SampleLaboratory = ({ isLoggedIn, userObj }) => {
     const history = useHistory();
     if(!isLoggedIn) {
         history.push("/");
@@ -15,10 +15,10 @@ const SampleLabotary = ({ restricted, isLoggedIn, match }) => {
     return (
         <div>
             <div>Configuration</div>
-           
+
             <button onClick={onLogOutClick}>Log Out</button>
         </div>
     );
 }
 
-export default SampleLabotary;
+export default SampleLaboratory;

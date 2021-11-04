@@ -31,7 +31,7 @@ const SamplerKaiser = () => {
             } else {
                 // log in
                data = await signInWithEmailAndPassword(authService, email, password);
-               history.push("/samplelabotory");
+               history.push("/samplelaboratory");
             }
         } catch (error) {
             console.log(error);
