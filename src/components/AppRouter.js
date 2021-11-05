@@ -16,38 +16,35 @@ import SamplePerf from "routes/SamplePerformance";
 
 
 const AppRouter = ({ isLoggedIn, userObj }) => {
-  console.log(userObj);
-    return (
-      <Router> 
-        <Switch>
+  return (
+    <Router> 
+      <Switch>
+        <>
+          <Navigation isLoggedIn={isLoggedIn} />
+          <Route exact path='/samplelaboratory'>
+            <SampleLaboratory isLoggedIn={isLoggedIn} userObj={userObj} />
+          </Route>
+          <Route path='/samplelaboratory/about' component={SampleAbout}>
+            <SampleAbout isLoggedIn={isLoggedIn} userObj={userObj}/>
+          </Route>
+          <Route path='/samplelaboratory/works' component={SampleWorks}>
+            <SampleWorks isLoggedIn={isLoggedIn} />
+          </Route>
+          <Route path='/samplelaboratory/performance' component={SamplePerf}>
+            <SamplePerf isLoggedIn={isLoggedIn} />
+          </Route>
+          
+          <Route exact path='/' component={Main} />
+          <Route path='/about' component={About} />
+          <Route path='/works' component={Works} />
+          <Route path='/performance' component={Performance} />
+          <Route path='/samplekaiser' component={SamplerKaiser}/>
+          <Footer />
+        </>                   
 
-          <>
-            <Navigation isLoggedIn={isLoggedIn} />
-            <Route exact path='/samplelaboratory'>
-              <SampleLaboratory isLoggedIn={isLoggedIn} userObj={userObj} />
-            </Route>
-            <Route path='/samplelaboratory/about' component={SampleAbout}>
-              <SampleAbout isLoggedIn={isLoggedIn} userObj={userObj}/>
-            </Route>
-            <Route path='/samplelaboratory/works' component={SampleWorks}>
-              <SampleWorks isLoggedIn={isLoggedIn} />
-            </Route>
-            <Route path='/samplelaboratory/performance' component={SamplePerf}>
-              <SamplePerf isLoggedIn={isLoggedIn} />
-            </Route>
-               
-         
-            <Route exact path='/' component={Main} />
-            <Route path='/about' component={About} />
-            <Route path='/works' component={Works} />
-            <Route path='/performance' component={Performance} />
-            <Route path='/samplekaiser' component={SamplerKaiser}/>
-            <Footer />
-          </>                   
-
-       </Switch>
-      </Router>
-    );
+      </Switch>
+    </Router>
+  );
 }
 
 export default AppRouter;

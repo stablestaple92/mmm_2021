@@ -4,7 +4,6 @@ import { useHistory } from "react-router";
 
 const SampleLaboratory = ({ isLoggedIn, userObj }) => {
     const history = useHistory();
-    console.log(userObj);
     if(!isLoggedIn) {
         history.push("/");
     }
