@@ -7,6 +7,14 @@ import {
     import { useHistory } from 'react-router';
 import "./SampleKaiser.css";
 
+/*
+    2021/11/08
+    1. 단순 가입 후 회원별 단계 차등 두기
+    2. 회원 관리 할 수 있는 페이지 더 만들기
+    3. 회원가입, 로그인 실패시 에러 메세지 띄우기 (상황별로 달라야함)
+*/
+
+
 const SamplerKaiser = () => {
     const history = useHistory();
     const authService = getAuth();
@@ -34,7 +42,7 @@ const SamplerKaiser = () => {
                history.push("/samplelaboratory");
             }
         } catch (error) {
-            console.log(error);
+            
         }
     }
 

@@ -15,7 +15,6 @@ const SampleLaboratory = ({ isLoggedIn, userObj }) => {
         <div>
             <div>Hello!</div>
             <div>Click navigation to config your informations</div>
-            <div>Your Email : {userObj.email}</div>
 
             <button onClick={onLogOutClick}>Log Out</button>
         </div>
