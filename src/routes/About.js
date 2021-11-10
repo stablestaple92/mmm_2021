@@ -4,6 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 
 const About = () => {
     const [abouts, setAbouts] = useState([]);
+    const [image, setImage] = useState("");
     const getAbouts = async() => {
         const docs = doc(dbService, "abouts", "artistInfo");
         const docSnapshot = await getDoc(docs);
@@ -21,17 +22,33 @@ const About = () => {
         } catch (error) {
             console.log(error);
         }
-        
+    }
+
+    const getImage = async () => {
+        const docs = doc(dbService, "abouts", "artistImage");
+        const docSnapshot = await getDoc(docs);
+        const dbImage = docSnapshot.data();
+        try {
+            if (docSnapshot.exists()){
+                setImage(dbImage.imgURL);
+            } else {
+                setImage("");
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {
         getAbouts();
+        getImage();
     }, []);
     
     return (
         <div>
             
             <h1>About</h1>
+            <img src={image} alt="artistPhoto"/>
             <h2>{abouts.artist}</h2>
             <h4>{abouts.introduction}</h4>
         </div>
