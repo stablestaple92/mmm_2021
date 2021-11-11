@@ -1,44 +1,129 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { dbService, storageService } from "fbase";
+import { collection, doc, getDocs, serverTimestamp, setDoc } from "@firebase/firestore";
 import { useHistory } from "react-router";
+import { getDownloadURL, ref, uploadString } from "@firebase/storage";
 
-const SampleWorks = ( {isLoggedIn} ) => {
+/*
+    2021/11/11
+    앞으로의 기능 추가 예정
+    1. 파일 크기 제한
+    2. 파일 업로드 취소시 오류 나는거 해결하기
+*/
+
+const SampleWorks = ({ isLoggedIn, userObj }) => {
     const history = useHistory();
-    
-    
+    const [sampleJacket, setSampleJacket] = useState("");
+    const [fileName, setFileName] = useState("");
+    const [works, setWorks] = useState([]);
+    const {register, handleSubmit} = useForm();
+
     // 로그인 안하면 내쫒기
     if(!isLoggedIn) {
         history.push("/");
     }
 
-    return (
+    const getWorks = async () => {
+        const dbWorks = await getDocs(collection(dbService, "works"));
+        dbWorks.forEach((works) => {
+            const worksObj = {
+                ...works.data(),
+                id: document.id,
+            };
+            console.log(worksObj);
+            setWorks((prev) => [worksObj, ...prev]);
+        });
+    }
 
+
+    useEffect(() => {
+        getWorks();
+    }, []);
+
+
+    // 앨범 정보 등록하기
+    const onSubmit = async (data) => {
+        const storageRef = ref(storageService, `jacketImg/${fileName}`);
+        const response = await uploadString(storageRef, sampleJacket, "data_url");
+        const fileURL = await getDownloadURL(response.ref);
+        await setDoc(doc(dbService, "works", data.catalog), {
+            jacketURL : fileURL,
+            releaseType : data.releaseType,
+            originType : data.originType,
+            formType : data.formType,
+            title : data.title,
+            catalog : data.catalog,
+            event : data.event,
+            price : data.price,
+            hplink : data.hplink,
+            ytlink : data.ytlink,
+            comment : data.comment,
+            createAt : serverTimestamp(),
+            creatorId : userObj.uid,
+        });
+        setSampleJacket("");
+        getWorks();
+    };
+
+
+
+    const onSampleJacket = (event) => {
+        const reader = new FileReader();
+        const {target : {files},} = event;
+        const file = files[0];
+        reader.onloadend = (event) => {
+            const {
+                currentTarget: {result},
+            } = event;  
+            setSampleJacket(result);
+            setFileName(file.name);
+        };
+        reader.readAsDataURL(file);
+    }
+
+
+    return (
         <>
-        <form>
-            
-            <input name="jacket" type="file"/>
-            <select name="releaseType">
-                <option>Regular</option>
-                <option>EP</option>
-                <option>Guest</option>
+        <div>
+            {works.map((work) => (
+            <div key={work.id}>
+                <img src={work.jacketURL} />
+                <h2>{work.title}</h2>
+                <h4>{work.releaseType}</h4>
+            </div>
+            ))}
+        </div>
+        <img id="sample"/>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            {sampleJacket &&
+                <img src={sampleJacket} alt="jacketsample"/>
+            }
+                <input {...register("jacket")} onChange={onSampleJacket} type="file"/>
+        
+            <select {...register("releaseType")}>
+                <option value="Regular">Regular</option>
+                <option value="EP">EP</option>
+                <option value="Guest">Guest</option>
             </select>
-            <select name="originType">
-                <option>Original</option>
-                <option>Remix</option>
-                <option>Special</option>
+            <select {...register("originType")}>
+                <option value="Original">Original</option>
+                <option value="Remix">Remix</option>
+                <option value="Special">Special</option>
             </select>
-            <select name="formType">
-                <option>CD</option>
-                <option>Digital</option>
-                <option>CD & Digital</option>
-                <option>Etc.</option>
+            <select {...register("formType")}>
+                <option value="CD">CD</option>
+                <option value="Digital">Digital</option>
+                <option value="CD & Digital">CD & Digital</option>
+                <option value="Etc.">Etc.</option>
             </select>
-            <input name="title" type="text" required placeholder="Title"/>
-            <input name="catalog" type="text" placeholder="Catalog No."/>
-            <input name="event" type="text" placeholder="Event"/>
-            <input name="price" type="text" placeholder="Price"/>
-            <input name="hplink" type="text" placeholder="Hompage Link"/>
-            <input name="ytlink" type="text" placeholder="Youtube Link"/>
-            
+            <input {...register("title")} name="title" type="text" placeholder="Title"/>
+            <input {...register("catalog")} name="catalog" type="text" placeholder="Catalog No."/>
+            <input {...register("event")} name="event" type="text" placeholder="Event"/>
+            <input {...register("price")} name="price" type="number" placeholder="Price"/>
+            <input {...register("hplink")} name="hplink" type="text" placeholder=" Link"/>
+            <input {...register("ytlink")} name="ytlink" type="text" placeholder="Youtube Link"/>
+            <textarea {...register("comment")} name="comment"></textarea>
             <input type="submit" value="Save"/>
         </form>
         </>

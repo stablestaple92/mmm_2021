@@ -4,10 +4,11 @@ import { dbService, storageService } from "fbase";
 import React, { useEffect, useState } from "react";
 
 /*
-    2021/11/08
+    2021/11/11
     앞으로의 기능 추가 예정
     1. 파일 크기 제한
     2. 파일 업로드 현황 보여주기 업로드 완료 등 - UploadBytesResumable로 모두 변환??
+    3. 파일 업로드 취소시 오류 나는거 해결하기
 */
 
 const AboutForm = ({ userObj }) => {

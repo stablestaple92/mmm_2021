@@ -25,10 +25,10 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
             <SampleLaboratory isLoggedIn={isLoggedIn} userObj={userObj} />
           </Route>
           <Route path='/samplelaboratory/about' component={SampleAbout}>
-            <SampleAbout isLoggedIn={isLoggedIn} userObj={userObj}/>
+            <SampleAbout isLoggedIn={isLoggedIn} userObj={userObj} />
           </Route>
           <Route path='/samplelaboratory/works' component={SampleWorks}>
-            <SampleWorks isLoggedIn={isLoggedIn} />
+            <SampleWorks isLoggedIn={isLoggedIn} userObj={userObj} />
           </Route>
           <Route path='/samplelaboratory/performance' component={SamplePerf}>
             <SamplePerf isLoggedIn={isLoggedIn} />
