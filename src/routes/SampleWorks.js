@@ -4,12 +4,14 @@ import { dbService, storageService } from "fbase";
 import { collection, doc, getDocs, serverTimestamp, setDoc } from "@firebase/firestore";
 import { useHistory } from "react-router";
 import { getDownloadURL, ref, uploadString } from "@firebase/storage";
+import { v4 as uuidv4 } from "uuid"; 
+import WorksTable from "components/WorksTable";
 
 /*
-    2021/11/11
+    2021/11/12
     앞으로의 기능 추가 예정
     1. 파일 크기 제한
-    2. 파일 업로드 취소시 오류 나는거 해결하기
+    2. map id해결 보기
 */
 
 const SampleWorks = ({ isLoggedIn, userObj }) => {
@@ -27,27 +29,25 @@ const SampleWorks = ({ isLoggedIn, userObj }) => {
     const getWorks = async () => {
         const dbWorks = await getDocs(collection(dbService, "works"));
         dbWorks.forEach((works) => {
+            console.log(works);
             const worksObj = {
                 ...works.data(),
-                id: document.id,
+                id: works.id,
             };
-            console.log(worksObj);
             setWorks((prev) => [worksObj, ...prev]);
         });
     }
 
-
     useEffect(() => {
         getWorks();
     }, []);
-
 
     // 앨범 정보 등록하기
     const onSubmit = async (data) => {
         const storageRef = ref(storageService, `jacketImg/${fileName}`);
         const response = await uploadString(storageRef, sampleJacket, "data_url");
         const fileURL = await getDownloadURL(response.ref);
-        await setDoc(doc(dbService, "works", data.catalog), {
+        await setDoc(doc(dbService, "works", uuidv4()), {
             jacketURL : fileURL,
             releaseType : data.releaseType,
             originType : data.originType,
@@ -66,8 +66,6 @@ const SampleWorks = ({ isLoggedIn, userObj }) => {
         getWorks();
     };
 
-
-
     const onSampleJacket = (event) => {
         const reader = new FileReader();
         const {target : {files},} = event;
@@ -79,21 +77,18 @@ const SampleWorks = ({ isLoggedIn, userObj }) => {
             setSampleJacket(result);
             setFileName(file.name);
         };
-        reader.readAsDataURL(file);
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            setSampleJacket("");
+            setFileName("");
+        }
     }
-
 
     return (
         <>
-        <div>
-            {works.map((work) => (
-            <div key={work.id}>
-                <img src={work.jacketURL} />
-                <h2>{work.title}</h2>
-                <h4>{work.releaseType}</h4>
-            </div>
-            ))}
-        </div>
+        <WorksTable works={works} />
+
         <img id="sample"/>
         <form onSubmit={handleSubmit(onSubmit)}>
             {sampleJacket &&
