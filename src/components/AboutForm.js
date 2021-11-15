@@ -2,12 +2,15 @@ import { deleteField, doc, getDoc, serverTimestamp, setDoc, updateDoc } from "@f
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable, uploadString } from "@firebase/storage";
 import { dbService, storageService } from "fbase";
 import React, { useEffect, useState } from "react";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
 
 /*
-    2021/11/12
+    2021/11/15
     앞으로의 기능 추가 예정
     1. 파일 크기 제한
     2. 파일 업로드 현황 보여주기 업로드 완료 등 - UploadBytesResumable로 모두 변환??
+    3. React-Quill 적용 완료 할 것 (이미지까지)
 */
 
 const AboutForm = ({ userObj }) => {
@@ -17,6 +20,8 @@ const AboutForm = ({ userObj }) => {
     const [artistIntroduction, setArtistIntroduction] = useState("");
     const [artistImage, setArtistImage] = useState([]);
     const [progress, setProgress] = useState(0);
+    const [quillValue, setQuillValue] = useState("");
+
 
     // Firebase Database에서 정보들 가져오기
     const getAbouts = async() => {
@@ -63,7 +68,7 @@ const AboutForm = ({ userObj }) => {
             setArtistName(value);
         } else if (name === "artistIntroduction") {
             setArtistIntroduction(value);
-        }
+        } 
     }
 
     // 아티스트 사진 선택하고 보여주기
@@ -165,7 +170,12 @@ const AboutForm = ({ userObj }) => {
         <textarea id="input-artist-introduction" name="artistIntroduction" value={artistIntroduction} onChange={onChange} type="text" maxLength={1500} />
         <input id="input-artist-submit" type="submit" value="Save" /> 
         </form>
+
+        <ReactQuill theme="snow" value={quillValue} onChange={setQuillValue} />
+
         </>
+
+
     );
 }
 

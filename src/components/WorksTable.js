@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./WorksTable.css";
 
 /*
-    2021/11/12
+    2021/11/15
     앞으로의 기능 추가 예정
     1. 체크시 테이블 row style변화 주기
     2. css
