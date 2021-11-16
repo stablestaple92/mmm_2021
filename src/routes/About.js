@@ -48,7 +48,6 @@ const About = () => {
     
     return (
         <div>
-            
             <h1>About</h1>
             <img src={image} alt="artistPhoto"/>
             <h2>{abouts.artist}</h2>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { deleteField, doc, getDoc, serverTimestamp, setDoc, updateDoc } from "@firebase/firestore";
 import { deleteObject, getDownloadURL, ref, uploadString } from "@firebase/storage";
 import { dbService, storageService } from "fbase";
+import "./AboutImage.css";
 
 const AboutImage = ({ userObj }) => {
     const [sampleImg, setSampleImg] = useState("");
@@ -97,8 +98,8 @@ const AboutImage = ({ userObj }) => {
     return (
         <>
             {artistImage.imgURL ? (
-                <div>
-                    <img src={artistImage.imgURL} alt="artistimage"/>
+                <div className="about-image-container">
+                    <img src={artistImage.imgURL} className="about-image" alt="artistimage"/>
                     <button onClick={onDeleteArtistImg}>Delete</button>
                 </div>
             ):(
@@ -113,8 +114,8 @@ const AboutImage = ({ userObj }) => {
             )}
 
             {sampleImg && 
-                <div>
-                    <img src={sampleImg} alt="imagesample"/>
+                <div className="about-image-sample-container">
+                    <img src={sampleImg} className="about-image-sample" alt="imagesample"/>
                     <button onClick={onClearSampleImg}>Clear</button>
                 </div>
             }

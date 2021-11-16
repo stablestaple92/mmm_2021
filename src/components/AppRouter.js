@@ -41,7 +41,6 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
           <Route path='/samplekaiser' component={SamplerKaiser}/>
           <Footer />
         </>                   
-
       </Switch>
     </Router>
   );

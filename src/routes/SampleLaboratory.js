@@ -4,13 +4,16 @@ import { useHistory } from "react-router";
 
 const SampleLaboratory = ({ isLoggedIn, userObj }) => {
     const history = useHistory();
+    
     if(!isLoggedIn) {
         history.push("/");
     }
+    
     const onLogOutClick = () => {
         authService.signOut();
         history.push("/samplekaiser");
     }
+    
     return (
         <div>
             <div>Hello!</div>

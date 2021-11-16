@@ -27,6 +27,7 @@ const SampleWorks = ({ isLoggedIn, userObj }) => {
 
     const getWorks = async () => {
         const dbWorks = await getDocs(collection(dbService, "works"));
+        
         dbWorks.forEach((works) => {
             const updateTime = convertDate(works);
             const worksObj = {
@@ -46,7 +47,6 @@ const SampleWorks = ({ isLoggedIn, userObj }) => {
     
     useEffect(() => {
         getWorks();
-        console.log(works.length);
     }, []);
 
     // 앨범 정보 등록하기
@@ -54,6 +54,7 @@ const SampleWorks = ({ isLoggedIn, userObj }) => {
         const storageRef = ref(storageService, `jacketImg/${fileName}`);
         const response = await uploadString(storageRef, sampleJacket, "data_url");
         const fileURL = await getDownloadURL(response.ref);
+        
         await setDoc(doc(dbService, "works", uuidv4()), {
             jacketURL : fileURL,
             releaseType : data.releaseType,
@@ -77,6 +78,7 @@ const SampleWorks = ({ isLoggedIn, userObj }) => {
         const reader = new FileReader();
         const {target : {files},} = event;
         const file = files[0];
+        
         reader.onloadend = (event) => {
             const {
                 currentTarget: {result},
@@ -84,6 +86,7 @@ const SampleWorks = ({ isLoggedIn, userObj }) => {
             setSampleJacket(result);
             setFileName(file.name);
         };
+        
         if (file) {
             reader.readAsDataURL(file);
         } else {
@@ -95,8 +98,7 @@ const SampleWorks = ({ isLoggedIn, userObj }) => {
     return (
         <>
         <WorksTable works={works} />
-
-        <img id="sample"/>
+        <button>Create</button>
         <form onSubmit={handleSubmit(onSubmit)}>
             {sampleJacket &&
                 <img src={sampleJacket} alt="jacketsample"/>

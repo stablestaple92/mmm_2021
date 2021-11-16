@@ -1,0 +1,12 @@
+.about-image-container, .about-image-sample-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.about-image {
+    width: 300px;
+}
+
+.about-image-sample {
+    width: 300px;
+}

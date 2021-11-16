@@ -14,7 +14,6 @@ import "./SampleKaiser.css";
     3. 회원가입, 로그인 실패시 에러 메세지 띄우기 (상황별로 달라야함)
 */
 
-
 const SamplerKaiser = () => {
     const history = useHistory();
     const authService = getAuth();
@@ -30,6 +29,7 @@ const SamplerKaiser = () => {
             setPassword(value);
         }
     }
+    
     const onSubmit = async (event) => {
         event.preventDefault();
         try {

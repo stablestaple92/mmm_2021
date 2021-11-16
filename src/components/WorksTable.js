@@ -29,7 +29,6 @@ const WorksTable = ({ works }) => {
         return checkedItems;
     };
     
-
     return (
         <table className="table-works">
             <thead>
