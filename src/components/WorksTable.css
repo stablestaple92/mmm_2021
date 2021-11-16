@@ -1,3 +1,31 @@
-#table-works{
-    border:1px;
+
+table {
+    border: 1px solid #9c9292;
+    width: 50%;
+    border-collapse: collapse;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+thead {
+    font-size: 0.8rem;
+}
+
+td, th {
+    padding: 1rem;
+    border-bottom: 1px solid #9c9292;
+    font-size: 0.8rem;
+}
+
+.table-jacket img{
+    width: 70px;
+}
+
+.no-works {
+    text-align: center;
+}
+
+.length-works {
+    text-align: right;
 }

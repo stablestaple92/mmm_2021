@@ -11,7 +11,6 @@ import WorksTable from "components/WorksTable";
     2021/11/12
     앞으로의 기능 추가 예정
     1. 파일 크기 제한
-    2. map id해결 보기
 */
 
 const SampleWorks = ({ isLoggedIn, userObj }) => {
@@ -29,17 +28,25 @@ const SampleWorks = ({ isLoggedIn, userObj }) => {
     const getWorks = async () => {
         const dbWorks = await getDocs(collection(dbService, "works"));
         dbWorks.forEach((works) => {
-            console.log(works);
+            const updateTime = convertDate(works);
             const worksObj = {
                 ...works.data(),
+                updateTime: updateTime,
                 id: works.id,
             };
             setWorks((prev) => [worksObj, ...prev]);
         });
     }
-
+    
+    const convertDate = (works) => {
+        const timestamp = works.data().createAt.seconds;
+        const date = new Date(timestamp * 1000);
+        return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    }
+    
     useEffect(() => {
         getWorks();
+        console.log(works.length);
     }, []);
 
     // 앨범 정보 등록하기

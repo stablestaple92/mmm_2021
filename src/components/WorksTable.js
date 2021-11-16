@@ -31,49 +31,48 @@ const WorksTable = ({ works }) => {
     
 
     return (
-        <table id="table-works">
-            <tbody>
+        <table className="table-works">
+            <thead>
                 <tr>
                     <td></td>
-                    <td>Jacket</td>
-                    <td>Title</td>
-                    <td>Catalog Num.</td>
-                    <td>Release</td>
-                    <td>Origin</td>
-                    <td>Form</td>
-                    <td>Event</td>
-                    <td>Price</td>
-                    <td>HP Link</td>
-                    <td>Youtube Link</td>
-                    <td>Comment</td>
+                    <td >Jacket</td>
+                    <td className="table-title">Title</td>
+                    <td className="table-catalog">Catalog Num.</td>
+                    <td className="table-update">Last Update</td>
+                    <td></td>
+                    <td></td>
                 </tr>
-                {works.map((work) => (   
+            </thead>
+            <tbody>
+                {works.length !== 0 ? (
                     <>
-                    {work ? (
-                        <tr key={work.id}>
-                        <td><input type="checkbox" value={work.id} onChange={checkHandler}></input></td>
-                        <td><img src={work.jacketURL} /></td>
-                        <td>{work.title}</td>
-                        <td>{work.catalog}</td>
-                        <td>{work.releaseType}</td>
-                        <td>{work.originType}</td>
-                        <td>{work.formType}</td>
-                        <td>{work.event}</td>
-                        <td>{work.price}</td>
-                        <td>{work.hplink}</td>
-                        <td>{work.ytlink}</td>
-                        <td>{work.comment}</td>
-                        <td>✎</td>
-                        <td>𝗫</td>
-                        </tr>
-                    ):(
-                        <tr>
-                        <td>There is no discography. Add some!</td>
-                        </tr>
-                    )}
+                        {works.map((work) => (   
+                            <tr key={work.id}>
+                            <td><input type="checkbox" value={work.id} onChange={checkHandler}></input></td>
+                            <td className="table-jacket"><img src={work.jacketURL} /></td>
+                            <td>{work.title}</td>
+                            <td>{work.catalog}</td>
+                            <td>{work.updateTime}</td>
+                            <td>Edit</td>
+                            <td>Delete</td>
+                            </tr>
+                        ))}
                     </>
-                ))}
+                ):(
+                    <>
+                        <tr>
+                        <td colSpan="7" className="no-works">There is no discography. Add some!</td>
+                        </tr>
+                    </>
+                )}
             </tbody>
+            <tfoot>
+                <>
+                    <tr>
+                    <td colSpan="7" className="length-works">Total Items : {works.length}</td>
+                    </tr>
+                </>
+            </tfoot>
         </table>
     );
 }
