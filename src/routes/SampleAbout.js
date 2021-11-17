@@ -13,7 +13,6 @@ const SampleAbout = ({ isLoggedIn, userObj }) => {
 
     return (
         <div>
-            <span>변경할 데이터를 입력해주세요</span>
             <AboutForm userObj={userObj} />
         </div>
     );

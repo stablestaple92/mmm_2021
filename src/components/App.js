@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import "./reset.css";
 import AppRouter from "components/AppRouter";
 import { authService } from "fbase";
 

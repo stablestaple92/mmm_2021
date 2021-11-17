@@ -96,30 +96,30 @@ const AboutImage = ({ userObj }) => {
     }
 
     return (
-        <>
+        <div className="about-image-container">
             {artistImage.imgURL ? (
-                <div className="about-image-container">
+                <div className="about-image-saved-container">
                     <img src={artistImage.imgURL} className="about-image" alt="artistimage"/>
                     <button onClick={onDeleteArtistImg}>Delete</button>
                 </div>
             ):(
                 <>
+                    {sampleImg && 
+                        <div className="about-image-sample-container">
+                            <img src={sampleImg} className="about-image-sample" alt="imagesample"/>
+                            <button onClick={onClearSampleImg}>Clear</button>
+                        </div>
+                    }
                     <form onSubmit={onUploadArtistImg}>
                         <input id="imgSelect" name="artistImg" type="file" accept="img/*" onChange={onArtistImage}/>
-                        <input type="submit" value="Upload"></input>
+                        <input type="submit" value="Save"></input>
                     </form>
                     <span>{progress}</span>
                     <span id="img-complete"></span>
                 </>
             )}
 
-            {sampleImg && 
-                <div className="about-image-sample-container">
-                    <img src={sampleImg} className="about-image-sample" alt="imagesample"/>
-                    <button onClick={onClearSampleImg}>Clear</button>
-                </div>
-            }
-        </>
+        </div>
     )
 }
 

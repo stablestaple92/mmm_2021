@@ -14,10 +14,9 @@ import SampleAbout from "routes/SampleAbout";
 import SampleWorks from "routes/SampleWorks";
 import SamplePerf from "routes/SamplePerformance";
 
-
 const AppRouter = ({ isLoggedIn, userObj }) => {
   return (
-    <Router> 
+    <Router>
       <Switch>
         <>
           <Navigation isLoggedIn={isLoggedIn} />
@@ -27,7 +26,10 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
           <Route path='/samplelaboratory/about' component={SampleAbout}>
             <SampleAbout isLoggedIn={isLoggedIn} userObj={userObj} />
           </Route>
-          <Route path='/samplelaboratory/works' component={SampleWorks}>
+          <Route exact path='/samplelaboratory/works' component={SampleWorks}>
+            <SampleWorks isLoggedIn={isLoggedIn} userObj={userObj} />
+          </Route>
+          <Route exact path='/samplelaboratory/works/*' component={SampleWorks}>
             <SampleWorks isLoggedIn={isLoggedIn} userObj={userObj} />
           </Route>
           <Route path='/samplelaboratory/performance' component={SamplePerf}>

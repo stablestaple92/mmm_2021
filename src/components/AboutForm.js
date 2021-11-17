@@ -1,5 +1,4 @@
 import React from "react";
-import "./AboutForm.css";
 import AboutImage from "./AboutImage";
 import AboutInfo from "./AboutInfo";
 

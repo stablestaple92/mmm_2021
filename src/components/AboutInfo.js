@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from "@firebase/firestore";
 import { dbService } from "fbase";
 import ReactQuill from "react-quill";
@@ -7,8 +7,6 @@ import 'react-quill/dist/quill.snow.css';
 /*
     2021/11/15
     앞으로의 기능 추가 예정
-    1. 파일 크기 제한
-    2. 파일 업로드 현황 보여주기 업로드 완료 등 - UploadBytesResumable로 모두 변환??
     3. React-Quill 이미지 캐치 후 스토리지에 저장
     4. CSS
 */
@@ -16,7 +14,6 @@ import 'react-quill/dist/quill.snow.css';
 const AboutForm = ({ userObj }) => {
     const [artistName, setArtistName] = useState("");
     const [artistIntroduction, setArtistIntroduction] = useState("");
-    const [quillValue, setQuillValue] = useState("");
 
     // Firebase Database에서 정보들 가져오기
     const getAbouts = async() => {
@@ -24,9 +21,8 @@ const AboutForm = ({ userObj }) => {
         const docSnapshot = await getDoc(docs);
         const dbAbouts = docSnapshot.data();   
 
-        setArtistName(dbAbouts.artist);
+        setArtistName(dbAbouts.name);
         setArtistIntroduction(dbAbouts.introduction);
-        setQuillValue(dbAbouts.quill);
     }
     
     // 초기 실행
@@ -38,9 +34,8 @@ const AboutForm = ({ userObj }) => {
     const onSubmit = async (event) => {
         event.preventDefault();
         await setDoc(doc(dbService, "abouts", "artistInfo"), {
-            artist : artistName,
+            name : artistName,
             introduction : artistIntroduction,
-            quill : quillValue,
             createAt : serverTimestamp(),
             creatorId : userObj.uid,
         });
@@ -48,23 +43,34 @@ const AboutForm = ({ userObj }) => {
 
     // 실시간으로 input 값 받기
     const onChange = (event) => {
-        const { target: {name, value},} = event;
-        if (name === "artistName") {
+        const { target: {value},} = event;
             setArtistName(value);
-        } else if (name === "artistIntroduction") {
-            setArtistIntroduction(value);
-        }
     }
+
+    const modules = useMemo(() => {
+        return {
+
+        }
+    }, []);
+
+    const formats = [
+        "header",
+        "bold",
+        "italic",
+        "underline",
+        "strike",
+        "blockquote",
+        "image",
+    ];
 
     return (
         <>
             <form onSubmit={onSubmit}>
-            <input id="input-artist-name" name="artistName" value={artistName} onChange={onChange} type="text" maxLength={50}/>
-            <textarea id="input-artist-introduction" name="artistIntroduction" value={artistIntroduction} onChange={onChange} type="text" maxLength={1500} />
+            <input id="input-artist-name" value={artistName} onChange={onChange} type="text" maxLength={50}/>
             <input id="input-artist-submit" type="submit" value="Save" /> 
             </form>
 
-            <ReactQuill theme="snow" value={quillValue} onChange={setQuillValue} />
+            <ReactQuill theme="snow" formats={formats} value={artistIntroduction} onChange={setArtistIntroduction} />
         </>
     );
 }

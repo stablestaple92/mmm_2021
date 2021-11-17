@@ -1,4 +1,12 @@
-.about-image-container, .about-image-sample-container{
+.about-image-container {
+    max-width: 650px;
+    
+    text-align: center;
+
+    padding-bottom: 100px;
+}
+
+.about-image-saved-container, .about-image-sample-container{
     display: flex;
     flex-direction: column;
 }
@@ -9,4 +17,6 @@
 
 .about-image-sample {
     width: 300px;
+    margin-left: auto;
+    margin-right: auto;
 }
