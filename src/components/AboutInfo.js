@@ -7,7 +7,6 @@ import 'react-quill/dist/quill.snow.css';
 /*
     2021/11/15
     앞으로의 기능 추가 예정
-    3. React-Quill 이미지 캐치 후 스토리지에 저장
     4. CSS
 */
 
@@ -47,30 +46,36 @@ const AboutForm = ({ userObj }) => {
             setArtistName(value);
     }
 
-    const modules = useMemo(() => {
-        return {
 
+const modules = useMemo (() => {
+    return {
+        toolbar : [
+            [{ 'header': '1'}, {'header': '2'}],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{'list': 'ordered'}, {'list': 'bullet'}, 
+                {'indent': '-1'}, {'indent': '+1'}],
+            ['link'],
+            ['clean']
+            ]
         }
-    }, []);
+}, []);
 
-    const formats = [
-        "header",
-        "bold",
-        "italic",
-        "underline",
-        "strike",
-        "blockquote",
-        "image",
+
+const formats = [
+        'header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+        'link'
     ];
 
     return (
         <>
             <form onSubmit={onSubmit}>
-            <input id="input-artist-name" value={artistName} onChange={onChange} type="text" maxLength={50}/>
-            <input id="input-artist-submit" type="submit" value="Save" /> 
+                <div>Artist Name</div> <input id="input-artist-name" value={artistName} onChange={onChange} type="text" maxLength={50}/>
+                <div>Introduction</div>
+                <ReactQuill theme="snow" modules={modules} formats={formats} value={artistIntroduction} onChange={setArtistIntroduction} />
+                <input id="input-artist-submit" type="submit" value="Save" /> 
             </form>
-
-            <ReactQuill theme="snow" formats={formats} value={artistIntroduction} onChange={setArtistIntroduction} />
         </>
     );
 }

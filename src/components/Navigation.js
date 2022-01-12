@@ -11,14 +11,14 @@ const Navigation = ( { isLoggedIn } ) => {
                 <>
                     <NavLink to="/sampleLaboratory">index</NavLink>
                     <NavLink to="/sampleLaboratory/about">about</NavLink>
-                    <NavLink to="/sampleLaboratory/Works">works</NavLink>
+                    <NavLink to="/sampleLaboratory/works">works</NavLink>
                     <NavLink to="/sampleLaboratory/performance">performance</NavLink>
                 </>
             :
                 <> 
                     <NavLink to="/">index</NavLink>
                     <NavLink to="/about">about</NavLink>
-                    <NavLink to="/Works">works</NavLink>
+                    <NavLink to="/works">works</NavLink>
                     <NavLink to="/performance">performance</NavLink>
                 </>
             }    

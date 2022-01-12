@@ -7,7 +7,7 @@ import Performance from "../routes/Performance";
 import Works from "../routes/Works";
 
 import Navigation from "./Navigation";
-import Footer from "./footer";
+import Footer from "./Footer";
 import SamplerKaiser from "routes/SampleKaiser";
 import SampleLaboratory from "routes/SampleLaboratory";
 import SampleAbout from "routes/SampleAbout";
